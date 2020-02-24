@@ -43,14 +43,16 @@ def find_device():
 		if len(device_list) == 1:
 			return serial_path
 		else:
-			chosen = ''
-			while chosen not in device_list:
+			chosen = -1
+			while chosen not in range(len(device_list)):
 				print("multiple serial devices have been detected,\nplease choose one from the following list:")
-				print(serial_path)
-				chosen = input("please type the device out exactly as it appears in the list: ")
-				if chosen not in device_list:
+				for n, device in enumerate(device_list):
+					print("[ {} ] - {}".format(n+1, device))
+				chosen = input("please type the number corresponding to the device you wish to connect to: ")
+				chosen = int(chosen) - 1
+				if chosen not in range(len(device_list)):
 					print('incorrect device entered, try again...')
-			return chosen
+			return device_list[chosen]
 	else:
 		print('No serial device is connected, connect a serial device via USB and try again')
 		time.sleep(3)
@@ -72,6 +74,6 @@ def get_rand_from_seed(lower, upper):
 	return random.randint(lower, upper)
 
 
-main()
+find_device()
 
 
