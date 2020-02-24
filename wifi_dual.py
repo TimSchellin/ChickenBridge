@@ -38,7 +38,23 @@ def get_bad_password():
 def find_device():
 	result = subprocess.run(['find', '/dev', '-name', '*ttyUSB*'], stdout=subprocess.PIPE)
 	serial_path = result.stdout.decode('utf-8').rstrip('\n')
-	return serial_path
+	if len(serial_path) > 1:
+		device_list = serial_path.splitlines()
+		if len(device_list) == 1:
+			return serial_path
+		else:
+			chosen = ''
+			while chosen not in device_list:
+				print("multiple serial devices have been detected,\nplease choose one from the following list:")
+				print(serial_path)
+				chosen = input("please type the device out exactly as it appears in the list: ")
+				if chosen not in device_list:
+					print('incorrect device entered, try again...')
+			return chosen
+	else:
+		print('No serial device is connected, connect a serial device via USB and try again')
+		time.sleep(3)
+		exit()
 
 
 def save_username(username):
@@ -57,4 +73,5 @@ def get_rand_from_seed(lower, upper):
 
 
 main()
+
 
