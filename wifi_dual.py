@@ -18,14 +18,13 @@ def get_user_input():
 		print(color)
 		if color not in ["red", "blue"]:
 			print("please choose either 'red' or 'blue' for your color")
-	send_to_serial(find_device(), color)
-	save_username(username)
-
-
-def send_to_serial(serial_path, team_color):
 	password = get_bad_password()
+	send_to_serial(find_device(), color, password)
+	save_username(username, password)
+
+
+def send_to_serial(serial_path, team_color, password):
 	startAP_string = 'ap -ssid "{}" -password "{}" -channel {}'.format(team_color, password, get_rand_from_seed(1, 11))
-	changeSSH_string = 'passwd {}'.format(password)
 	ser = serial.Serial(serial_path, 115200)
 	ser.write(startAP_string.encode())
 	print("access pont created")
