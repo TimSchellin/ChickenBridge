@@ -74,6 +74,6 @@ def get_rand_from_seed(lower, upper):
 	return random.randint(lower, upper)
 
 
-find_device()
+main()
 
 
