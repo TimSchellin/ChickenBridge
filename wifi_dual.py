@@ -27,7 +27,7 @@ def send_to_serial(serial_path, team_color, password):
 	startAP_string = 'ap -ssid "{}" -password "{}" -channel {}'.format(team_color, password, get_rand_from_seed(1, 11))
 	ser = serial.Serial(serial_path, 115200)
 	ser.write(startAP_string.encode())
-	print("access pont created")
+	print("access point created")
 
 	# change ssh password
 	child = pexpect.spawn('passwd root')
